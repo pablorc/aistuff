@@ -1,0 +1,40 @@
+{
+  "name": "momentum-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for the Momentum task and habit tracker",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "dev": "tsx src/index.ts",
+    "migrate": "node-pg-migrate up --dir dist/migrations",
+    "migrate:dev": "npm run build && npm run migrate",
+    "test": "vitest run && vitest run --config vitest.integration.config.ts",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:integration": "vitest run --config vitest.integration.config.ts --reporter=verbose",
+    "test:e2e": "vitest run --config vitest.integration.config.ts tests/e2e",
+    "test:coverage": "vitest run --coverage && vitest run --config vitest.integration.config.ts --coverage",
+    "typecheck": "tsc --noEmit",
+    "typecheck:test": "tsc -p tsconfig.test.json --noEmit"
+  },
+  "node-pg-migrate": {
+    "databaseUrlVar": "DATABASE_URL",
+    "migrationsTable": "pgmigrations"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "dotenv": "^16.4.0",
+    "node-pg-migrate": "^7.7.0",
+    "pg": "^8.13.0",
+    "zod": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.11.0",
+    "@vitest/coverage-v8": "^4.1.5",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

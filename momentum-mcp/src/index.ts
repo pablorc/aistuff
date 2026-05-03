@@ -1,0 +1,19 @@
+import 'dotenv/config';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { getPool } from './db/client.js';
+import { registerTaskTools } from './tools/tasks.js';
+import { registerTagTools } from './tools/tags.js';
+import { registerRecurrenceTools } from './tools/recurrence.js';
+import { registerReviewTools } from './tools/review.js';
+
+const server = new McpServer({ name: 'momentum-mcp', version: '1.0.0' });
+const pool = getPool();
+
+registerTaskTools(server, pool);
+registerTagTools(server, pool);
+registerRecurrenceTools(server, pool);
+registerReviewTools(server, pool);
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
